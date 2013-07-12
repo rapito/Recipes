@@ -1,0 +1,44 @@
+<h1>Listing recipes</h1>
+
+<%= form_tag({}, {:method => :get}) do %>
+    <%
+       dif = []
+       dif.push  ['Difficulty',0]
+        get_difficulty_select_items.each {|x| dif.push x}
+    %>
+    <%= select_tag :difficulty_level, options_for_select(dif), :onchange => "this.form.submit();" %>
+    <%= select_tag :ingredients_amount, options_for_select(select_amount_of_ingredients), :onchange => "this.form.submit();" %>
+<% end %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Estimaded cooking time</th>
+    <th>Difficulty level</th>
+    <th>Directions</th>
+    <th>Ingredients Amount</th>
+    <th>Comments Amount</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @recipes.each do |recipe| %>
+  <tr>
+    <td><%= recipe.name %></td>
+    <td><%= humanize_time recipe.estimaded_cooking_time %></td>
+    <td><%= get_difficulty recipe.difficulty_level %></td>
+    <td><%= recipe.directions.split('.').first+'...' %></td>
+    <td><%= recipe.ingredients.count %></td>
+    <td><%= recipe.comments.count %></td>
+    <td><%= link_to 'Show', 'recipes/'+recipe.name %></td>
+    <td><%= link_to 'Add Comment', new_comment_path(:recipe_id => recipe.id) %></td>
+    <td><%= link_to 'Edit', edit_recipe_path(recipe) %></td>
+    <td><%= link_to 'Destroy', recipe, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Recipe', new_recipe_path %>

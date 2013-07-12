@@ -1,0 +1,56 @@
+<%= form_for(@recipe) do |f| %>
+  <% if @recipe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+      <ul>
+      <% @recipe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @recipe.new_record? %>
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name %>
+      </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :estimaded_cooking_time %><br />
+    <%= f.time_select :estimaded_cooking_time %>
+  </div>
+  <div class="field">
+    <%= f.label :difficulty_level %><br />
+    <%= f.select :difficulty_level , get_difficulty_select_items%>
+  </div>
+  <div class="field">
+    <%= f.label :directions %><br />
+    <%= f.text_area :directions , :rows => 5%>
+  </div>
+
+  <% (1..8).step(1).each do |n| %>
+      <% f.fields_for :ingredients, @recipe.ingredients.build do |ing| %>
+            <h3>Ingredient <%= n %></h3>
+
+            <div class="control-group">
+              <%= ing.label :name, :class => 'control-label' %>
+              <div class="controls">
+                <%= ing.text_field :name, :class => 'text_field' %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= ing.label :quantity, :class => 'control-label' %>
+              <div class="controls">
+                <%= ing.text_field :quantity, :class => 'text_field' %>
+              </div>
+            </div>
+      <% end %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

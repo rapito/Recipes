@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 1
+  name: MyString
+  estimaded_cooking_time: 2013-07-11 20:20:02
+  difficulty_level: 1
+  directions: MyString
+
+two:
+  id: 1
+  name: MyString
+  estimaded_cooking_time: 2013-07-11 20:20:02
+  difficulty_level: 1
+  directions: MyString
